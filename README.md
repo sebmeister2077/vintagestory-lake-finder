@@ -14,8 +14,9 @@ dotnet build -c Release
 ```
 
 The build picks up `%APPDATA%\Vintagestory\*.dll` automatically via `$(VsDir)` in the csproj.
+After a successful build, MSBuild also creates `artifacts/VintageStoryLakeFinder-Release.zip` containing the distributable mod files and the GPLv2 license text.
 
-Copy `bin/Release/VintageStoryLakeFinder.dll` and `modinfo.json` into a folder next to each other, zip it, and drop the zip into `%APPDATA%\Vintagestory\Mods\`. Or symlink the build output folder into `Mods\` for dev.
+Drop the generated zip into `%APPDATA%\Vintagestory\Mods\`. Or symlink the build output folder into `Mods\` for dev.
 
 ## Use
 

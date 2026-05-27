@@ -9,6 +9,8 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
         <VsDir>$(AppData)\Vintagestory</VsDir>
+        <PackageOutputDir>$(MSBuildProjectDirectory)\artifacts\package\$(Configuration)</PackageOutputDir>
+        <PackageZipPath>$(MSBuildProjectDirectory)\artifacts\$(AssemblyName)-$(Configuration).zip</PackageZipPath>
     </PropertyGroup>
 
     <ItemGroup>
@@ -43,5 +45,24 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
+
+    <Target Name="PackageMod" AfterTargets="Build"
+        Condition="'$(DesignTimeBuild)' != 'true' and '$(TargetPath)' != '' and Exists('$(TargetPath)')">
+        <ItemGroup>
+            <PackageFiles Include="$(TargetPath)" />
+            <PackageFiles Include="$(MSBuildProjectDirectory)\modinfo.json" />
+            <PackageFiles Include="$(MSBuildProjectDirectory)\LICENSE" />
+        </ItemGroup>
+
+        <RemoveDir Directories="$(PackageOutputDir)" />
+        <MakeDir Directories="$(PackageOutputDir)" />
+        <Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(PackageOutputDir)"
+            SkipUnchangedFiles="true" />
+        <Delete Files="$(PackageZipPath)" ContinueOnError="true" />
+        <ZipDirectory SourceDirectory="$(PackageOutputDir)" DestinationFile="$(PackageZipPath)"
+            Overwrite="true" />
+
+        <Message Importance="high" Text="Created mod package: $(PackageZipPath)" />
+    </Target>
 
 </Project>
