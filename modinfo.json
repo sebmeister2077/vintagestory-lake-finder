@@ -1,0 +1,12 @@
+{
+  "type": "code",
+  "modid": "lakefinder",
+  "name": "Lake Finder",
+  "authors": ["sebmeister2077"],
+  "description": "Server command to locate large lakes/oceans by scanning map chunks. (works with non-generated chunks too)",
+  "version": "0.1.0",
+  "side": "Server",
+  "dependencies": {
+    "game": ""
+  }
+}
