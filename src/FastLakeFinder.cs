@@ -295,7 +295,7 @@ namespace VintageStoryLakeFinder
             for (int i = 0; i < map.Length; i++)
             {
                 int v = map[i];
-                byte b, g, r;
+                byte b, g, r, a;
                 if (v >= threshold)
                 {
                     // Ocean: blue, intensity by value above threshold
@@ -303,6 +303,7 @@ namespace VintageStoryLakeFinder
                     r = 0;
                     g = (byte)(60 + 100 * t);
                     b = (byte)(160 + 90 * t);
+                    a = 255;
                 }
                 else
                 {
@@ -311,12 +312,13 @@ namespace VintageStoryLakeFinder
                     r = (byte)(80 + 120 * t);
                     g = (byte)(100 + 120 * t);
                     b = (byte)(40 + 60 * t);
+                    a = 0;
                 }
                 int p = i * 4;
                 pixels[p + 0] = b;
                 pixels[p + 1] = g;
                 pixels[p + 2] = r;
-                pixels[p + 3] = 255;
+                pixels[p + 3] = a;
             }
 
             var info = new SKImageInfo(w, h, SKColorType.Bgra8888, SKAlphaType.Opaque);
